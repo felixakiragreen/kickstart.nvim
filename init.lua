@@ -84,6 +84,8 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+require 'felixai'
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -93,22 +95,16 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- Make line numbers default
--- vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
+vim.o.number = true
 vim.o.relativenumber = true
+vim.opt.tabstop = 3
+vim.opt.shiftwidth = 3
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+vim.o.showmode = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -132,7 +128,7 @@ vim.o.smartcase = true
 vim.o.signcolumn = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
+vim.o.updatetime = 50
 
 -- Decrease mapped sequence wait time
 vim.o.timeoutlen = 300
@@ -159,7 +155,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 6
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -184,11 +180,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<leader><Tab>', ':Neotree toggle<CR>', { desc = 'Toggle Neotree' })
 
 -- Felix's Terrible Cursed Idea
 vim.keymap.set({ 'n', 'v' }, 'h', 'i', { noremap = true, desc = 'Enter insert mode' })
@@ -383,8 +375,7 @@ require('lazy').setup({
           return vim.fn.executable 'make' == 1
         end,
       },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-
+      { 'nvim-telescope/telescope-ui-select.nvim' },    
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
@@ -911,21 +902,21 @@ require('lazy').setup({
       require('monokai-pro').setup {
         overridePalette = function(filter)
           return {
-            dark2 = '#0a0a09',
-            dark1 = '#141411',
-            background = '#1d1e1a',
-            text = '#ebebe2',
-            accent1 = '#ed3467',
-            accent2 = '#f1901d',
-            accent3 = '#f7dd4b',
-            accent4 = '#a5e22c',
-            accent5 = '#38bce6',
-            accent6 = '#9f7af2',
-            dimmed1 = '#aaaba0',
-            dimmed2 = '#7f8076',
-            dimmed3 = '#53544c',
-            dimmed4 = '#2a2b26',
-            dimmed5 = '#141411',
+            dark2 = felixai.grey700, -- secondary background (selected row)
+            dark1 = felixai.grey800, -- secondary background (menu)
+            background = felixai.grey750,
+            text = felixai.grey200,
+            accent1 = felixai.red400,
+            accent2 = felixai.orange400,
+            accent3 = felixai.yellow400,
+            accent4 = felixai.green400,
+            accent5 = felixai.blue400,
+            accent6 = felixai.purle400,
+            dimmed1 = felixai.felix, -- current line number
+            dimmed2 = felixai.grey300, -- secondary foreground
+            dimmed3 = felixai.grey500, -- comments
+            dimmed4 = felixai.grey600, -- line numbers, unused indentation lines
+            dimmed5 = felixai.grey400, -- neotree folder lines
           }
         end,
       }
@@ -989,6 +980,10 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+        enable = true,
+        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+        --  If you are experiencing weird indenting issues, add the language to
+        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
@@ -1011,10 +1006,10 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent-line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
