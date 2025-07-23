@@ -180,8 +180,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-vim.keymap.set('n', '<leader><Tab>', ':Neotree toggle<CR>', { desc = 'Toggle Neotree' })
-
 -- Felix's Terrible Cursed Idea
 vim.keymap.set({ 'n', 'v' }, 'h', 'i', { noremap = true, desc = 'Enter insert mode' })
 vim.keymap.set({ 'n', 'v' }, 'i', 'k', { noremap = true, desc = 'Move up' })
@@ -190,13 +188,13 @@ vim.keymap.set({ 'n', 'v' }, 'k', 'j', { noremap = true, desc = 'Move down' })
 vim.keymap.set({ 'n', 'v' }, 'l', 'l', { noremap = true, desc = 'Move right' })
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
+--  Use CTRL+<ijkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-i>', '<C-w><C-j>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -916,7 +914,7 @@ require('lazy').setup({
             dimmed2 = felixai.grey300, -- secondary foreground
             dimmed3 = felixai.grey500, -- comments
             dimmed4 = felixai.grey600, -- line numbers, unused indentation lines
-            dimmed5 = felixai.grey400, -- neotree folder lines
+            dimmed5 = felixai.grey700, -- neotree folder lines
           }
         end,
       }
