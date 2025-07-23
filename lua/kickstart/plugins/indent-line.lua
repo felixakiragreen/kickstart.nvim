@@ -1,5 +1,12 @@
 return {
-	{ 
+	{
+		'tenxsoydev/tabs-vs-spaces.nvim',
+		opts = {
+			indentation = 'tabs',
+			standartize_on_save = true,
+		},
+	},
+	{
 		'HiPhish/rainbow-delimiters.nvim',
 		-- strategy = {},
 		-- query = {},
@@ -70,8 +77,8 @@ return {
 
 			vim.g.rainbow_delimiters = { highlight = highlightLines }
 
-			require('ibl').setup { 
-				
+			require('ibl').setup {
+
 				indent = {
 					highlight = highlightDimLines,
 					char = '┆',
@@ -90,11 +97,10 @@ return {
 					-- enabled = false,
 					highlight = highlightLines,
 					char = '┃',
-				}
+				},
 			}
 
 			-- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-
 		end,
 	},
 }
