@@ -3,7 +3,7 @@ return {
 		'tenxsoydev/tabs-vs-spaces.nvim',
 		opts = {
 			indentation = 'tabs',
-			standartize_on_save = true,
+			standartize_on_save = false,
 		},
 	},
 	{
